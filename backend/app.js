@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
@@ -7,6 +8,7 @@ const postsRoutes = require('./routes/posts');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use("/images",express.static(path.join("backend/images")))
 
 mongoose
   .connect('mongodb://localhost:27017/test-angular')
