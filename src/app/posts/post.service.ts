@@ -115,4 +115,18 @@ export class PostsService {
   deletePost(postId: string) {
     return this.http.delete('http://localhost:3000/api/posts/' + postId);
   }
+
+
+  // deletePost(postId: string) {
+  //   this.http
+  //     .delete('http://localhost:3000/api/posts/' + postId)
+  //     .subscribe(() => {
+  //       const updatedPosts = this.posts.filter(post => {
+  //         return post.id !== postId;
+  //       });
+
+  //       this.posts = updatedPosts;
+  //       this.postsUpdated.next([...this.posts]);
+  //     });
+  // }
 }
