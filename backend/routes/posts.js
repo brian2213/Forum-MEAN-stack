@@ -88,12 +88,25 @@ router.put(
 );
 
 router.get('', (req, res, next) => {
-  Post.find().then(document => {
-    res.status(200).json({
-      message: 'posts send sucessfully',
-      posts: document
+  const pageSize = +req.query.pageSize;
+  const curPage = +req.query.curPage;
+  const postQuery = Post.find();
+  let fetchedDoc;
+  if (pageSize && curPage) {
+    postQuery.skip(pageSize * (curPage - 1)).limit(pageSize);
+  }
+  postQuery
+    .then(document => {
+      fetchedDoc = document;
+      return Post.count();
+    })
+    .then(count => {
+      res.status(200).json({
+        message: 'posts send sucessfully',
+        posts: fetchedDoc,
+        maxPosts: count
+      });
     });
-  });
 });
 
 router.get('/:id', (req, res, next) => {
