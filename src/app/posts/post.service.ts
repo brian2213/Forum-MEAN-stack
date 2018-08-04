@@ -1,9 +1,9 @@
 import { Post } from './post.model';
-import { Injectable } from '../../../node_modules/@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Subject } from '../../../node_modules/rxjs';
+import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Router } from '../../../node_modules/@angular/router';
+import { Router } from '@angular/router';
 @Injectable({ providedIn: 'root' })
 export class PostsService {
   private posts: Post[] = [];

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Post } from '../post.model';
 import { PostsService } from '../post.service';
 import { Subscription } from 'rxjs';
-import { PageEvent } from '../../../../node_modules/@angular/material';
+import { PageEvent } from '@angular/material';
 @Component({
   selector: 'app-post-list',
   templateUrl: './post-list.component.html',

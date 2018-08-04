@@ -3,12 +3,12 @@ import {
   FormGroup,
   FormControl,
   Validators
-} from '../../../../node_modules/@angular/forms';
+} from '@angular/forms';
 import { PostsService } from '../post.service';
 import {
   ActivatedRoute,
   ParamMap
-} from '../../../../node_modules/@angular/router';
+} from '@angular/router';
 import { Post } from '../post.model';
 import { mimeType } from './mime-type.validator';
 @Component({

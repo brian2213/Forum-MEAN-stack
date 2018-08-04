@@ -1,5 +1,5 @@
-import { AbstractControl } from '../../../../node_modules/@angular/forms';
-import { Observable, Observer, of } from '../../../../node_modules/rxjs';
+import { AbstractControl } from '@angular/forms';
+import { Observable, Observer, of } from 'rxjs';
 
 export const mimeType = (
   control: AbstractControl
