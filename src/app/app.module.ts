@@ -35,20 +35,20 @@ import { ErrorComponent } from './error/error.component';
     ErrorComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     ApproutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    FormsModule,
     MatInputModule,
     MatCardModule,
     MatButtonModule,
     MatToolbarModule,
     MatExpansionModule,
     MatProgressSpinnerModule,
-    HttpClientModule,
     MatPaginatorModule,
-    MatDialogModule,
-    FormsModule
+    MatDialogModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
