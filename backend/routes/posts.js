@@ -30,16 +30,18 @@ const storage = multer.diskStorage({
 });
 
 router.delete('/:id', checkAuth, (req, res, next) => {
-  Post.deleteOne({ _id: req.params.id, creator: req.userData.userId }).then(
-    result => {
+  Post.deleteOne({ _id: req.params.id, creator: req.userData.userId })
+    .then(result => {
       // console.log(result);
       if (result.n > 0) {
         res.status(200).json({ message: 'post deleted' });
       } else {
         res.status(401).json({ message: 'unauthorized deleted' });
       }
-    }
-  );
+    })
+    .catch(error => {
+      res.status(500).json({ message: 'fail to fetch posts' });
+    });
 });
 
 router.post(
@@ -55,19 +57,24 @@ router.post(
       creator: req.userData.userId
     });
 
-    post.save().then(result => {
-      res.status(201).json({
-        message: 'post send success',
-        post: {
-          id: result._id,
-          // title: result.title,
-          // content: result.content,
-          // imagePath: result.imagePath
+    post
+      .save()
+      .then(result => {
+        res.status(201).json({
+          message: 'post send success',
+          post: {
+            id: result._id,
+            // title: result.title,
+            // content: result.content,
+            // imagePath: result.imagePath
 
-          ...result
-        }
+            ...result
+          }
+        });
+      })
+      .catch(error => {
+        res.status(500).json({ message: 'Creatring post failed' });
       });
-    });
   }
 );
 
@@ -91,17 +98,18 @@ router.put(
       creator: req.userData.userId
     });
     // console.log(post);
-    Post.updateOne(
-      { _id: req.params.id, creator: req.userData.userId },
-      post
-    ).then(result => {
-      //console.log(result);
-      if (result.nModified > 0) {
-        res.status(200).json({ message: 'Update success' });
-      } else {
-        res.status(401).json({ message: 'Update failed' });
-      }
-    });
+    Post.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
+      .then(result => {
+        //console.log(result);
+        if (result.nModified > 0) {
+          res.status(200).json({ message: 'Update success' });
+        } else {
+          res.status(401).json({ message: 'Update failed' });
+        }
+      })
+      .catch(error => {
+        res.status(500).json({ message: 'update failed' });
+      });
   }
 );
 
@@ -124,17 +132,24 @@ router.get('', (req, res, next) => {
         posts: fetchedDoc,
         maxPosts: count
       });
+    })
+    .catch(error => {
+      res.status(500).json({ message: 'fail to fetch posts' });
     });
 });
 
 router.get('/:id', (req, res, next) => {
-  Post.findById(req.params.id).then(post => {
-    if (post) {
-      res.status(200).json(post);
-    } else {
-      res.status(404).json({ message: 'post not found' });
-    }
-  });
+  Post.findById(req.params.id)
+    .then(post => {
+      if (post) {
+        res.status(200).json(post);
+      } else {
+        res.status(404).json({ message: 'post not found' });
+      }
+    })
+    .catch(error => {
+      res.status(500).json({ message: 'fail to fetch posts' });
+    });
 });
 
 module.exports = router;

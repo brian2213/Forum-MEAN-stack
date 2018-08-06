@@ -1,27 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  Validators
-} from '@angular/forms';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PostsService } from '../post.service';
-import {
-  ActivatedRoute,
-  ParamMap
-} from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Post } from '../post.model';
 import { mimeType } from './mime-type.validator';
+import { Subscription } from '../../../../node_modules/rxjs';
+import { AuthService } from '../../auth/auth.service';
 @Component({
   selector: 'app-post-create',
   templateUrl: './post-create.component.html',
   styleUrls: ['./post-create.component.css']
 })
-export class PostCreateComponent implements OnInit {
+export class PostCreateComponent implements OnInit, OnDestroy {
   constructor(
     public postsService: PostsService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
+  private authStatusSub: Subscription;
   private mode = 'create';
   private postId: string;
   post: Post;
@@ -31,6 +28,11 @@ export class PostCreateComponent implements OnInit {
   imagePreview: string;
 
   ngOnInit() {
+    this.authStatusSub = this.authService
+      .getAuthStatusListener()
+      .subscribe(ifAuth => {
+        this.isLoading = false;
+      });
     this.form = new FormGroup({
       title: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(3)]
@@ -78,7 +80,11 @@ export class PostCreateComponent implements OnInit {
     }
     this.isLoading = true;
     if (this.mode === 'create') {
-      this.postsService.addPost(this.form.value.title, this.form.value.content, this.form.value.image);
+      this.postsService.addPost(
+        this.form.value.title,
+        this.form.value.content,
+        this.form.value.image
+      );
     } else {
       this.postsService.updatePost(
         this.postId,
@@ -101,6 +107,9 @@ export class PostCreateComponent implements OnInit {
     };
 
     reader.readAsDataURL(file);
+  }
+  ngOnDestroy() {
+    this.authStatusSub.unsubscribe();
   }
 
 }
