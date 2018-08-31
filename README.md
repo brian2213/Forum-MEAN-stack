@@ -1,4 +1,5 @@
 # MiniTwitter - MEAN stack
+**Author**: YiMing Chen<br /><br />
 
 This project is a mini twitter which implemented post, upload, user authorization and authentication with MEAN stack.
 
