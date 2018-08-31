@@ -1,10 +1,15 @@
 # MiniTwitter - MEAN stack
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.1.
+This project is a mini twitter which implemented post, upload, user authorization and authentication with MEAN stack.
 
-## Development server
+## Dependencies
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+* node.js
+* express
+* Angular
+* Angular Material
+* MongoDB
+
 
 ## How to run
 
@@ -12,7 +17,7 @@ Run `mongod` to start a mongo databse server
 
 Run `npm run start:server` to start the backend server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` for a front-end server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 
 
